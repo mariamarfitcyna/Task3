@@ -3,20 +3,17 @@ import java.util.stream.Collectors;
 
 public class Library {
 
-    private Set<Book> books;
     private HashMap<String, Book> namesCatalog;
     private HashMap<String, HashSet<Book>> authorCatalog;
     private HashMap<Integer, HashSet<Book>> dataCatalog;
 
     public Library(){
-        books = new HashSet<>();
         namesCatalog = new HashMap<>();
         authorCatalog = new HashMap<>();
         dataCatalog = new HashMap<>();
     }
 
     public Library(Book...v){
-        books = new HashSet<>(Arrays.asList(v));
         for (Book book: v){
             addBookToHashMaps(book);
         }
@@ -45,43 +42,29 @@ public class Library {
         authorCatalog.get(book.getAuthor()).remove(book);
         dataCatalog.get(book.getReleased()).remove(book);
     }
-
-
-    public void print(){
-        for (Book i : books){
-            System.out.println(i.getName());
-        }
-    }
+    
 
     public void addBook(Book book){
-        books.add(book);
         addBookToHashMaps(book);
 
     }
 
     public void addAllBooks(Book...v){
-        books.addAll(List.of(v));
         for (Book i : v){
             addBookToHashMaps(i);
         }
     }
 
     public void removeBook(Book book){
-        books.remove(book);
         removeBookFromHashMaps(book);
     }
 
     public void removeBooks(Book ...v){
-        books.removeAll(List.of(v));
         for (Book i : v){
             removeBookFromHashMaps(i);
         }
     }
 
-    public void removeBook(String name){
-        Book myBook = findBookByName(name);
-        books.remove(myBook);
-    }
 
     public Book findBookByName(String name){
         Book book = namesCatalog.get(name);
