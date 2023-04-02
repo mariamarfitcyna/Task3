@@ -5,8 +5,8 @@ public class Library {
 
     private Set<Book> books;
     private HashMap<String, Book> namesCatalog;
-    private HashMap<String, List<Book>> authorCatalog;
-    private HashMap<Integer, List<Book>> dataCatalog;
+    private HashMap<String, HashSet<Book>> authorCatalog;
+    private HashMap<Integer, HashSet<Book>> dataCatalog;
 
     public Library(){
         books = new HashSet<>();
@@ -29,14 +29,14 @@ public class Library {
         if (authorCatalog.containsKey(authorKey)){
             authorCatalog.get(authorKey).add(book);
         }else {
-            authorCatalog.put(authorKey, List.of(book));
+            authorCatalog.put(authorKey, new HashSet<>(List.of(book)));
         };
 
         Integer releasedKey = book.getReleased();
         if (dataCatalog.containsKey(releasedKey)){
             dataCatalog.get(releasedKey).add(book);
         }else {
-            dataCatalog.put(releasedKey, List.of(book));
+            dataCatalog.put(releasedKey, new HashSet<>(List.of(book)));
         };
     }
 
@@ -89,12 +89,12 @@ public class Library {
     }
 
     public HashSet<Book> findBooksByAuthor(String author){
-        List<Book> bookList = authorCatalog.get(author);
+        HashSet<Book> bookList = authorCatalog.get(author);
         return new HashSet<>(bookList);
     }
 
     public HashSet<Book> findBooksByData(int released){
-        List<Book> bookList = dataCatalog.get(released);
+        HashSet<Book> bookList = dataCatalog.get(released);
         return new HashSet<>(bookList);
     }
 
